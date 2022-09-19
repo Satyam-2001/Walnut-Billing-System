@@ -1,1 +1,2 @@
-<h1><img src="https://user-images.githubusercontent.com/88069082/190952661-661e04b9-47d5-4a7e-95a4-e42965cbc647.jpg"/>Walnut BIlling Sysytem</h1>
+<h1>Walnut Billing System</h1>
+It is a Billing System which is built using reactJs framework for `Walnut: Child Development Clinic`. In this application, a user can generate, edit, delete bills of a patient.
