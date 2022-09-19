@@ -1,1 +1,0 @@
-<h1><img src="https://user-images.githubusercontent.com/88069082/190952661-661e04b9-47d5-4a7e-95a4-e42965cbc647.jpg"/>Walnut BIlling Sysytem</h1>
