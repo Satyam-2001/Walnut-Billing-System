@@ -1,0 +1,22 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--primary-color);
+    height: 64px;
+}
+
+.logo {
+    height: 100%;
+    margin-left: 1.5rem;
+}
+
+.main {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fafafa;
+    padding: 1.5rem;
+    /* background-color: var(--white); */
+}

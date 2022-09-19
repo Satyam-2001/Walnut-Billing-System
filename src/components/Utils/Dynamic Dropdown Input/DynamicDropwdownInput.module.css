@@ -1,0 +1,47 @@
+.wrapper {
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    top: 30px;
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+    max-height: 20rem;
+    width: 15rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: white;
+    z-index: 99999999999;
+    border: 1px rgba(10, 10, 10, 0.5) solid;
+    border-radius: 0.2rem;
+    box-shadow: 5px 5px 5px rgba(10, 10, 10, 0.3);
+}
+
+.btn {
+    text-align: left;
+    padding: 0.2rem 0 0.2rem 0.4rem;
+    height: 1.7rem;
+    color: black;
+    background-color: white;
+    border: none;
+    /* border-top: 1px rgba(100, 100, 100, 1) solid; */
+}
+
+.btn:hover {
+    background-color: var(--light-color);
+}
+
+.text-input {
+    box-sizing: border-box;
+    padding: 0.1rem;
+}
+
+.text-input:active,
+.text-input:focus {
+    border-width: 0.2rem;
+    border-color: var(--light-color);
+    border-style: solid;
+    outline: none;
+}

@@ -1,0 +1,26 @@
+.table {
+    box-sizing: border-box;
+    background-color: transparent;
+    border-collapse: collapse;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.table td, .table th {
+    border-width: 2px;
+    border-color: var(--primary-color);
+    border-style: solid;
+    padding: 5px;
+}
+
+.table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.table tr:nth-child(even) {
+    background-color: rgba(10, 10, 10, 0.07);
+}
+
+.table-wrapper {
+    overflow: auto;
+}

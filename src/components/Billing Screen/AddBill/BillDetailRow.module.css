@@ -1,0 +1,12 @@
+.text-input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.1rem;
+}
+
+.text-input:active,
+.text-input:focus {
+    border-color: var(--light-color);
+    border-style: solid;
+    outline: none;
+}

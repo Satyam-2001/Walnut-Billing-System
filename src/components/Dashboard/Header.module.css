@@ -1,0 +1,81 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary-color);
+    height: 64px;
+}
+
+.header h1 {
+    color: var(--white);
+    font: 600 1.4rem Roboto, "Helvetica Neue", sans-serif;
+    padding-left: 1rem;
+}
+
+.header ion-icon {
+    font-size: 2rem;
+    color: var(--white);
+}
+
+.header button {
+    margin-left: 1rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 2.5rem;
+    aspect-ratio: 1/1 !important;
+}
+
+.header button:hover {
+    background-color: var(--helper-color);
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.3rem;
+}
+
+.username {
+    color: var(--white);
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+.user-icon {
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    z-index: 99999;
+    top: 54px;
+    right: 10px;
+    height: 60px;
+    width: 100px;
+    background-color: white;
+    box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.logout-btn {
+    background-color: transparent;
+    border: none;
+    width: 100px;
+    height: 40px;
+}
+
+.logout-btn:hover {
+    background-color: rgba(100, 100, 100, 0.1);
+}

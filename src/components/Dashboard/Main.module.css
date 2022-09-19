@@ -1,0 +1,22 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    min-height: calc(100vh - 64px);
+    background-color: #fafafa;
+}
+
+.main-screen {
+    flex: 1;
+    height: calc(100vh - 64px);
+    transition: all 0.3s linear;
+    overflow-x: hidden;
+    min-width: 360px;
+}
+/* 
+.nav-closed {
+    transform: translateX(-220px);
+}
+
+.nav-open {
+    transform: translateX(0px);
+} */

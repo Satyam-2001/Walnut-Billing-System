@@ -1,24 +1,32 @@
-import logo from './logo.svg';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from 'react';
 import './App.css';
+import Dashboard from './components/Dashboard/Dashboard';
+import Login from './components/LogIn Screen/Login'
+import LoginContext from './context/login-context';
 
-function App() {
+const MainApp = () => {
+  const [isLogin, setIsLogin] = useState(null)
+
+  const setLoggedOut = () => {
+    setIsLogin(null)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <LoginContext.Provider value={setLoggedOut}>
+      {isLogin ? <Dashboard username={isLogin} setLoggedOut={setLoggedOut} /> : <Login loggedIn={(name) => setIsLogin(name)} />}
+    </LoginContext.Provider>
+  )
+}
+
+const App = () => {
+
+  return (
+    <BrowserRouter basename='/crm'>
+      <Routes>
+        <Route path="/" element={<MainApp />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -1,0 +1,146 @@
+.add-bill {
+    width: calc(100% - 2.8rem);
+    margin: 1rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.3rem;
+    box-shadow: 5px 5px 5px 5px rgba(10, 10, 10, 0.1);
+}
+
+.btn-div {
+    width: calc(100% - 0.8rem);
+    box-sizing: border-box;
+    margin: 0.4rem 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.btn {
+    background-color: var(--helper-color-2);
+    border: none;
+    border-radius: 0.2rem;
+    padding: 0.5rem 0.6rem;
+    color: white;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn:hover {
+    background-color: var(--dark-color);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.label {
+    display: inline-block;
+    font-family: BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-weight: 500;
+    width: calc(40% - 0.5rem);
+}
+
+.cell {
+    display: flex;
+    justify-content: space-around;
+    margin: 0.2rem 0;
+}
+
+.text-input {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: calc(40% - 0.5rem);
+    padding: 0.1rem;
+    outline: none;
+}
+
+.text-input:active,
+.text-input:focus {
+    border-color: var(--light-color);
+    border-style: solid;
+}
+
+.table {
+    margin: 0.5rem 1rem;
+    width: calc(100% - 2rem);
+}
+
+.table-input {
+    width: 100%;
+}
+
+
+/* .table {
+    box-sizing: border-box;
+    background-color: transparent;
+    border-collapse: collapse;
+    font-family: 'Courier New', Courier, monospace;
+    overflow-x: auto;
+}
+
+.table td, .table th {
+    border-width: 2px;
+    border-color: var(--primary-color);
+    border-style: solid;
+    padding: 5px;
+}
+
+.table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.table tr:nth-child(even) {
+    background-color: rgba(10, 10, 10, 0.07);
+}
+
+.table-wrapper {
+    overflow: auto;
+    margin-bottom: 0.5rem;
+}
+*/
+
+.add-row-btn-wrapper {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.validate-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.invalid {
+    color: red;
+    font-weight: 400;
+    background-color: rgba(255, 118, 118, 0.16);
+    padding: 0.3rem 1rem;
+    border-radius: 0.2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+@media (max-width: 750px) {
+    .grid {
+        grid-template-columns: 100%;
+    }
+
+    .label {
+        width: calc(50% - 0.5rem);
+    }
+
+    .cell {
+        justify-content: space-between;
+    }
+}
