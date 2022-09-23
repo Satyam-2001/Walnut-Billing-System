@@ -84,7 +84,6 @@ const AddBill = (props) => {
         event.preventDefault()
         try {
             if (!validateData()) {
-                console.log('hello');
                 setValidate(false)
                 return;
             }
@@ -110,8 +109,16 @@ const AddBill = (props) => {
                     }
                 })
             }
-            const res = await axios.post('/api/v1/receipt/saveReceipt', data, { 'Content-type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:3000' })
-            console.log(res);
+            const res = await axios.post('/api/v1/receipt/saveReceipt', data, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+                    'Content-type': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://localhost:3000'
+                }
+            })
+            if(res.status === 200) {
+                props.fetchBillData(props.patientId)
+            }
         }
         catch (e) {
             if (e.response.status === 401) logout()

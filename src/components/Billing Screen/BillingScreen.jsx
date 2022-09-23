@@ -45,10 +45,10 @@ const BillingScreen = (props) => {
         }
     }
 
-    const fetchBillData = (billId) => {
+    const fetchBillData = (patientId) => {
         setIsLoading(true)
         setIsAddBillOpen(false)
-        getBillData(billId).then(res => {
+        getBillData(patientId).then(res => {
             setIsLoading(false)
             setButtonName('Change Patient')
             setBillData(res)
@@ -80,7 +80,7 @@ const BillingScreen = (props) => {
                 </div>
             ) : undefined}
             {!isAddBillOpen && isLoading ? <p className={classes.text}>Loading...</p> : undefined}
-            {isAddBillOpen ? <AddBill patientId={patientData.id} patientName={patientData.fullName} closeAddBill={() => setIsAddBillOpen(false)} /> : undefined}
+            {isAddBillOpen ? <AddBill patientId={patientData.id} patientName={patientData.fullName} closeAddBill={() => setIsAddBillOpen(false)} fetchBillData={fetchBillData} /> : undefined}
             {!isAddBillOpen && typeof billData === 'object' && billData.length > 0 ? <BillTable billData={billData} /> : undefined}
             {!isAddBillOpen && typeof billData === 'object' && billData.length === 0 ? <p className={classes.text}>No Bill Available</p> : undefined}
         </div>

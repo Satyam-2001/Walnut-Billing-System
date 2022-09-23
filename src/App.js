@@ -22,9 +22,9 @@ const MainApp = () => {
 const App = () => {
 
   return (
-    <BrowserRouter basename='/crm'>
+    <BrowserRouter basename='/'>
       <Routes>
-        <Route path="/" element={<MainApp />} />
+        <Route path="/crm" element={<MainApp />} />
       </Routes>
     </BrowserRouter>
   );

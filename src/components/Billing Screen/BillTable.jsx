@@ -16,8 +16,6 @@ const BillTable = ({ billData }) => {
             responseType: "blob"
         })
             .then(blob => {
-                console.log(blob);
-
                 const url = window.URL.createObjectURL(blob.data);
                 const a = document.createElement('a');
                 a.href = url;
