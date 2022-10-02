@@ -9,6 +9,7 @@ const MainApp = () => {
   const [isLogin, setIsLogin] = useState(null)
 
   const setLoggedOut = () => {
+    sessionStorage.setItem('username', '')
     setIsLogin(null)
   }
 
@@ -22,9 +23,9 @@ const MainApp = () => {
 const App = () => {
 
   return (
-    <BrowserRouter basename='/'>
+    <BrowserRouter basename='/crm'>
       <Routes>
-        <Route path="/crm" element={<MainApp />} />
+        <Route path="/" element={<MainApp />} />
       </Routes>
     </BrowserRouter>
   );

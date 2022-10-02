@@ -9,10 +9,14 @@ const Menu = (props) => {
 
     return (
         <div className={classes.menu} ref={wrapperRef}>
-            <button onClick={props.logoutHandler} className={classes['logout-btn']}>LogOut</button>
+            <button onClick={props.logoutHandler} className={classes['logout-btn']}>Logout</button>
         </div>
     );
 }
+
+const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
 const Header = (props) => {
 
@@ -27,7 +31,7 @@ const Header = (props) => {
                     <h1>DASHBOARD</h1>
                 </div>
                 <div className={classes.user}>
-                    <p className={classes.username}>{`Hello ${props.username}`}</p>
+                    <p className={classes.username}>{`Hello ${capitalizeFirstLetter(props.username)}`}</p>
                     <button ref={loginButtonRef} onClick={() => setMenuOpen(prop => !prop)}><ion-icon name="person-circle-outline" classNmae={classes['user-icon']}></ion-icon></button>
                 </div>
             </header>

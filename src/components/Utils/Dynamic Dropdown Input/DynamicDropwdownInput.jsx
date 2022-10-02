@@ -27,7 +27,7 @@ const DynamicDropwdownInput = (props) => {
     }
 
     const changeInputValue = (event) => {
-        setName(event.target.value)
+        setName(event.target.value) 
         callMethod(event.target.value)
     }
 

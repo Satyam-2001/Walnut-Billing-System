@@ -9,11 +9,15 @@ const LoginBox = (props) => {
     const [invalidUsername, setInvalidUsername] = useState(false)
     const [invalidPassword, setInvalidPassword] = useState(false)
     const [invalidCredential, setInvalidCredential] = useState(false)
+    const [showPassword, setShowPasword] = useState(false)
 
     const loginClick = () => {
         if (username && password) {
             login(username, password).then(res => {
-                if (res.loggedIn) props.loggedIn(username)
+                if (res.loggedIn) {
+                    sessionStorage.setItem('username', username)
+                    props.loggedIn(username)
+                }
                 else setInvalidCredential(true)
             });
             setPassword('')
@@ -29,6 +33,10 @@ const LoginBox = (props) => {
         setInvalidCredential(false)
     }
 
+    const changePasswordVisibility = () => {
+        setShowPasword(prop => !prop)
+    }
+
     return (
         <div className={classes['login-box']} >
             <span className={classes.title}>Login</span>
@@ -40,10 +48,14 @@ const LoginBox = (props) => {
                 </div>
                 <div className={classes['login-credential']}>
                     <p className={classes.name}>Password</p>
-                    <input name='password' type='password' required={true} className={`${classes['login-input']} ${invalidPassword ? classes.invalid : undefined}`} onChange={e => setPassword(e.target.value)} onFocus={fieldOnFocus} value={password}></input>
+                    <div className={classes['password-wrapper']}>
+                        <input name='password' type={showPassword ? 'text' : 'password'} autoComplete={"off"} required={true} className={`${classes['login-input']} ${invalidPassword ? classes.invalid : undefined}`} onChange={e => setPassword(e.target.value)} onFocus={fieldOnFocus} value={password}>
+                        </input>
+                        <button className={classes['visibility-icon']} onClick={changePasswordVisibility}><ion-icon name={showPassword ? 'eye-off-outline' : 'eye-outline'}></ion-icon></button>
+                    </div>
                     {invalidPassword ? <p className={classes['invalid-text']}>Password is required</p> : undefined}
                 </div>
-                {invalidCredential ? <p className={classes['invalid-credential']}>username or password was invalid</p> : undefined}
+                {invalidCredential ? <p className={classes['invalid-credential']}>Username or password was invalid</p> : undefined}
                 <button className={classes['login-btn']} onClick={loginClick}>Login</button>
             </div>
         </div>

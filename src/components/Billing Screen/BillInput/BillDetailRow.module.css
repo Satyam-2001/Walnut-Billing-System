@@ -10,3 +10,9 @@
     border-style: solid;
     outline: none;
 }
+
+.input-invalid {
+    border-color: red;
+    background-color: rgba(250, 160, 160, 0.2);
+    border-width: 1px;
+}

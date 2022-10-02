@@ -71,3 +71,8 @@ ul {
 @media (max-width: 400px) {
   * {font-size: 12px;}
 }
+
+button {
+  cursor: pointer;
+  border: none;
+}

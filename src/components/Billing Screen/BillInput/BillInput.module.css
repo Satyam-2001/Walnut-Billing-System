@@ -65,6 +65,8 @@
 .text-input:focus {
     border-color: var(--light-color);
     border-style: solid;
+    border-width: 2px;
+    background-color: transparent;
 }
 
 .table {
@@ -119,6 +121,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.invalid-input {
+    border-color: red;
+    background-color: rgba(250, 160, 160, 0.2);
+    border-width: 1px;
 }
 
 .invalid {
