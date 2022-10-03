@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import BillInput from '../BillInput/BillInput'
 import axios from 'axios'
 import LoginContext from '../../../context/login-context'
@@ -30,7 +30,7 @@ const EditBill = (props) => {
                 }
             })
             if (res.status === 200) {
-                toast.success('Bill Edited')
+                toast.success('Bill Edited Successfully')
                 props.closeBill()
                 props.fetchBillData(props.patientData)
             }
@@ -39,11 +39,11 @@ const EditBill = (props) => {
             if (e.response.status === 401) logout()
             return e
         }
-}
+    }
 
-return (
-    <BillInput value='Edit' apiCall={editBillApiCall} billId={props.billInfo.billId} patientId={props.patientId} initialBillDetails={props.billInfo} initialBillDetailRow={props.billInfo.billDetails} closeAddBill={props.closeBill} />
-)
+    return (
+        <BillInput value='Edit' apiCall={editBillApiCall} billId={props.billInfo.billId} patientId={props.patientData.id} initialBillDetails={props.billInfo} initialBillDetailRow={props.billInfo.billDetails} closeAddBill={props.closeBill} />
+    )
 }
 
 export default EditBill

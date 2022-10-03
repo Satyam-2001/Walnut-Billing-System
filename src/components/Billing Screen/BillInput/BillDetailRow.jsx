@@ -34,7 +34,6 @@ const BillDetailRow = (props) => {
     const [clinicArray, setClinicArray] = useState([])
     const logout = useContext(LoginContext)
 
-
     const getMappedDoctors = async () => {
         try {
             const res = await axios.get(`/api/v1/patient/getMappedDoctorsBasedOnPatient`, {

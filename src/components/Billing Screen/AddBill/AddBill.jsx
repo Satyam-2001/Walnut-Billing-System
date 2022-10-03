@@ -72,7 +72,7 @@ const AddBill = (props) => {
             })
             
             if (res.status === 200) {
-                toast.success('New Bill Added')
+                toast.success('Bill Added Successfully')
                 props.closeBill()
                 props.fetchBillData(props.patientData)
             }

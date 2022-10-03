@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState, useContext, Fragment } from 'react'
+import React, { useState, useContext } from 'react'
 import AddBill from './AddBill/AddBill'
 import classes from './BillingScreen.module.css'
 import DynamicDropwdownInput from '../Utils/Dynamic Dropdown Input/DynamicDropwdownInput'
@@ -15,6 +15,7 @@ const BillingScreen = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [patientData, setPatient] = useState(null)
     const logout = useContext(LoginContext)
+    
 
     const getMatchingPatient = async (name) => {
         try {
@@ -93,8 +94,8 @@ const BillingScreen = (props) => {
             {!isAddBillOpen && isLoading ? <p className={classes.text}>Loading...</p> : undefined}
             {isAddBillOpen ? <AddBill username={props.username} patientData={patientData} closeBill={() => setIsAddBillOpen(false)} fetchBillData={fetchBillData} /> : undefined}
             {isEditBillOpen ? <EditBill patientData={patientData} closeBill={() => setIsEditBillOpen(undefined)} billInfo={isEditBillOpen} fetchBillData={fetchBillData} /> : undefined}
-            {!isAddBillOpen && !isEditBillOpen && typeof billData === 'object' && billData.length > 0 ? <BillTable billData={billData} editBill={editBill} patientData={patientData} fetchBillData={fetchBillData} /> : undefined}
-            {!isAddBillOpen && typeof billData === 'object' && billData.length === 0 ? <p className={classes.text}>No Bill Available</p> : undefined}
+            {!isAddBillOpen && !isEditBillOpen && !isLoading && typeof billData === 'object' && billData.length > 0 ? <BillTable billData={billData} editBill={editBill} patientData={patientData} fetchBillData={fetchBillData} /> : undefined}
+            {!isAddBillOpen && !isLoading && typeof billData === 'object' && billData.length === 0 ? <p className={classes.text}>No Bill Available</p> : undefined}
         </div>
     )
 }

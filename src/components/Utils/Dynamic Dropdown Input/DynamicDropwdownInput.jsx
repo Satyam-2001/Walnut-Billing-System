@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useContext, useState, useRef } from 'react'
 import classes from './DynamicDropwdownInput.module.css'
 import LoginContext from '../../../context/login-context'
