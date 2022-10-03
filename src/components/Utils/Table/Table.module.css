@@ -10,6 +10,7 @@
     border-color: var(--primary-color);
     border-style: solid;
     padding: 5px;
+    height: 1.5rem;
 }
 
 .table thead {

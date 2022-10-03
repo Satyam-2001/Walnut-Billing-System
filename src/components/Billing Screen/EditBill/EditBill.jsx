@@ -2,6 +2,8 @@ import React, {useContext} from 'react'
 import BillInput from '../BillInput/BillInput'
 import axios from 'axios'
 import LoginContext from '../../../context/login-context'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditBill = (props) => {
 
@@ -28,12 +30,14 @@ const EditBill = (props) => {
                 }
             })
             if (res.status === 200) {
+                toast.success('Bill Edited')
                 props.closeBill()
-                props.fetchBillData(props.patientId)
+                props.fetchBillData(props.patientData)
             }
         }
         catch (e) {
             if (e.response.status === 401) logout()
+            return e
         }
 }
 

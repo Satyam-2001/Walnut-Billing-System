@@ -1,3 +1,9 @@
+.patient-input-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .wrapper {
     position: relative;
 }
@@ -44,4 +50,27 @@
     border-color: var(--light-color);
     border-style: solid;
     outline: none;
+}
+
+
+.submit-btn {
+    width: fit-content;
+    margin-left: 1rem;
+    background-color: var(--primary-color);
+    padding: 6px 12px;
+    border-radius: 5px;
+    border-style: none;
+    cursor: pointer;
+    color: var(--white);
+    font-size: 1.1rem;
+    letter-spacing: 0.1rem;
+}
+
+.submit-btn:hover {
+    background-color: var(--helper-color-2);
+}
+
+.btn-disabled:hover {
+    background-color: var(--dark-color);
+    cursor: no-drop;
 }

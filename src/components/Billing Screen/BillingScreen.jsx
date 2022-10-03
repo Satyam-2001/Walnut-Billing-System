@@ -10,18 +10,11 @@ import EditBill from './EditBill/EditBill'
 const BillingScreen = (props) => {
 
     const [isAddBillOpen, setIsAddBillOpen] = useState(false)
-    const [isEditBillOpen, setIsEditBillOpen] = useState(undefined) 
+    const [isEditBillOpen, setIsEditBillOpen] = useState(undefined)
     const [billData, setBillData] = useState(undefined)
-    const [patientData, setPatient] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-    const [buttonName, setButtonName] = useState('Select Patient')
-    const [selectButtonDisabled, setSelectButtonDisabled] = useState(true)
+    const [patientData, setPatient] = useState(null)
     const logout = useContext(LoginContext)
-
-    const getPatient = (data) => {
-        setSelectButtonDisabled(false)
-        setPatient(data)
-    }
 
     const getMatchingPatient = async (name) => {
         try {
@@ -55,20 +48,19 @@ const BillingScreen = (props) => {
         }
     }
 
-    const fetchBillData = (patientId) => {
+    const fetchBillData = (patientData) => {
         setIsLoading(true)
         setIsAddBillOpen(false)
-        setSelectButtonDisabled(true)
-        getBillData(patientId).then(res => {
+        setPatient(patientData)
+        getBillData(patientData.id).then(res => {
             setIsLoading(false)
-            setButtonName('Change Patient')
             setBillData(res)
         }
         )
     }
 
     const addBill = () => {
-        if(!isAddBillOpen) setIsEditBillOpen(undefined)
+        if (!isAddBillOpen) setIsEditBillOpen(undefined)
         setIsAddBillOpen(prop => !prop)
     }
 
@@ -85,10 +77,7 @@ const BillingScreen = (props) => {
                 <div className={classes['patient-input']}>
                     <div className={classes['patient-box']}>
                         <p className={classes.label}>Patient Name</p>
-                        <div className={classes['patient-input-wrapper']}>
-                            <DynamicDropwdownInput attr={'fullName'} getMatchingData={getMatchingPatient} callBack={getPatient} />
-                            <button disabled={selectButtonDisabled} className={`${classes['submit-btn']} ${selectButtonDisabled ? classes['btn-disabled'] : undefined}`} onClick={() => fetchBillData(patientData.id)}><p>{buttonName}</p></button>
-                        </div>
+                        <DynamicDropwdownInput attr={'fullName'} getMatchingData={getMatchingPatient} fetchBillData={fetchBillData} />
                     </div>
                 </div>
             </div>
@@ -102,9 +91,9 @@ const BillingScreen = (props) => {
                 </div>
             ) : undefined}
             {!isAddBillOpen && isLoading ? <p className={classes.text}>Loading...</p> : undefined}
-            {isAddBillOpen ? <AddBill patientId={patientData.id} patientName={patientData.fullName} closeBill={() => setIsAddBillOpen(false)} fetchBillData={fetchBillData} /> : undefined}
-            {isEditBillOpen ? <EditBill patientId={patientData.id} closeBill={() => setIsEditBillOpen(undefined)} billInfo={isEditBillOpen} /> : undefined}
-            {!isAddBillOpen && !isEditBillOpen && typeof billData === 'object' && billData.length > 0 ? <BillTable billData={billData} editBill={editBill} /> : undefined}
+            {isAddBillOpen ? <AddBill username={props.username} patientData={patientData} closeBill={() => setIsAddBillOpen(false)} fetchBillData={fetchBillData} /> : undefined}
+            {isEditBillOpen ? <EditBill patientData={patientData} closeBill={() => setIsEditBillOpen(undefined)} billInfo={isEditBillOpen} fetchBillData={fetchBillData} /> : undefined}
+            {!isAddBillOpen && !isEditBillOpen && typeof billData === 'object' && billData.length > 0 ? <BillTable billData={billData} editBill={editBill} patientData={patientData} fetchBillData={fetchBillData} /> : undefined}
             {!isAddBillOpen && typeof billData === 'object' && billData.length === 0 ? <p className={classes.text}>No Bill Available</p> : undefined}
         </div>
     )

@@ -14,7 +14,7 @@ const Main = (props) => {
     return (
         <div className={classes.main}>
             <Navbar navbarOpen={props.navbarOpen} selected={selected} setOption={setOption} />
-            {selected === 'Billing Screen' ? <BillingScreen className={`${classes['main-screen']}`} /> : undefined}
+            {selected === 'Billing Screen' ? <BillingScreen className={`${classes['main-screen']}`} username={props.username} /> : undefined}
         </div>
     )
 }

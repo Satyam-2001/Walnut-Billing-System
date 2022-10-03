@@ -2,6 +2,8 @@ import axios from 'axios'
 import React, { useContext } from 'react'
 import BillInput from '../BillInput/BillInput'
 import LoginContext from '../../../context/login-context'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const filterDate = (date) => {
     return `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`
@@ -28,7 +30,6 @@ const initialBillDetails = {
     "paymentId": "",
     "paymentMode": "",
     "paymentDate": "",
-    "paymentBank": "",
     "generatedBy": undefined,
     "patientId": undefined
 }
@@ -40,20 +41,17 @@ const AddBill = (props) => {
 
     const addBillApiCall = async (billDetail, billDetailRow) => {
         
-        const resId = await axios.get(`/api/v1/receipt/getReceiptId/${props.patientId}`, {
+        const resId = await axios.get(`/api/v1/receipt/getReceiptId/${props.patientData.id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('auth_token')}`
             }
         })
         
-
-        console.log(billDetailRow);
-        
         const data = {
             ...billDetail,
             billId: resId.data,
-            patientId: props.patientId,
-            generatedBy: props.patientName,
+            patientId: props.patientData.id,
+            generatedBy: props.username,
             billDate: filterDate(new Date()),
             billDetails: billDetailRow.map((rowData, index) => {
                 return {
@@ -74,17 +72,19 @@ const AddBill = (props) => {
             })
             
             if (res.status === 200) {
+                toast.success('New Bill Added')
                 props.closeBill()
-                props.fetchBillData(props.patientId)
+                props.fetchBillData(props.patientData)
             }
         }
         catch (e) {
             if (e.response.status === 401) logout()
+            return e
         }
     }
 
     return (
-        <BillInput value='Add' apiCall={addBillApiCall} patientId={props.patientId} initialBillDetails={initialBillDetails} initialBillDetailRow={[initialBillDetailRow]} closeAddBill={props.closeBill} />
+        <BillInput value='Add' apiCall={addBillApiCall} patientId={props.patientData.id} initialBillDetails={initialBillDetails} initialBillDetailRow={[initialBillDetailRow]} closeAddBill={props.closeBill} />
     )
 }
 

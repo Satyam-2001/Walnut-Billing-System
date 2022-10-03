@@ -51,9 +51,13 @@ const BillInput = (props) => {
     const [billDetail, dispatch] = useReducer(reducer, props.initialBillDetails)
     const [billDetailRow, dispatchRow] = useReducer(rowReducer, props.initialBillDetailRow.map(billDetailData => { return { id: Math.floor(Math.random() * 10000 + 1), billDetailData } }))
     const [isValidate, setValidate] = useState(true)
-    const [paymentDisabled, setPaymentDisabled] = useState(billDetail.paymentMode && billDetail.paymentMode === 'Cash')
+    const [paymentDisabled, setPaymentDisabled] = useState(billDetail.paymentMode === "" || billDetail.paymentMode === 'Cash')
     const [serverError, setServerError] = useState(false)
     const logout = useContext(LoginContext)
+
+    const total_amount = billDetailRow.reduce((value, data) => {
+        return value + +data.billDetailData.no_of_session * (+data.billDetailData.per_session_cost - +data.billDetailData.discount);
+    }, 0)
 
     const addRowHandler = () => {
         dispatchRow({ type: 'addBill' })
@@ -65,8 +69,9 @@ const BillInput = (props) => {
     }
 
     const validateData = () => {
-        if (billDetail.paymentMode === "" || billDetail.paymentDate === "" || billDetail.billStatus === "" || billDetail.remark === "") return false;
-        if (billDetailRow.find(row => { return (row.billDetailData.treatmentId === "" || row.billDetailData.no_of_session === "" || row.billDetailData.per_session_cost === "" || row.billDetailDatasession_start_Date === "" || row.billDetailData.session_end_Date === "" || (row.billDetailData.discount === "" && !(row.billDetailData.discount_reason === ""))) })) return false;
+        if (billDetail.paymentMode === "" || billDetail.paymentDate === "") return false;
+        if (billDetail.paymentMode !== "Cash" && billDetail.patientId === "") return false;
+        if (billDetailRow.find(row => { return (row.billDetailData.treatmentId === "" || row.billDetailData.no_of_session === "" || row.billDetailData.per_session_cost === "" || ((row.billDetailData.discount === "" || row.billDetailData.discount === '0')  && !(row.billDetailData.discount_reason === ""))) })) return false;
         return true;
     }
 
@@ -89,8 +94,7 @@ const BillInput = (props) => {
             return;
         }
         try {
-            props.apiCall(billDetail, billDetailRow)
-            setServerError(true)
+            props.apiCall(billDetail, billDetailRow).then().catch(e => setServerError(true))
         }
         catch (e) {
             if (e.response.status === 401) logout()
@@ -99,7 +103,7 @@ const BillInput = (props) => {
 
     return (
         <div className={classes['add-bill']}>
-            <h4>Bill Details {props.billId ? `: ${props.billId}` : undefined}</h4>
+            <h4>Bill Details {props.billId ? `: ${props.billId}` : undefined} : Amount - {total_amount}</h4>
             <hr />
             <Table header={tableHeaders} className={classes.table}>
                 {billDetailRow.map((row, index) => {
@@ -122,17 +126,13 @@ const BillInput = (props) => {
                 </div>
                 <div className={classes.cell}>
                     <label className={classes.label} htmlFor="Payment Id">Payment Id</label>
-                    <input disabled={paymentDisabled} value={billDetail.paymentId} id="Payment Id" type="text" className={`${classes['text-input']} ${!(isValidate || paymentDisabled || billDetail.paymentId) ? classes['invalid-input'] : undefined}`} onChange={(e) => dispatch({ type: 'paymentId', paymentId: e.target.value })}></input>
-                </div>
-                <div className={classes.cell}>
-                    <label className={classes.label} htmlFor="Payment Bank">Payment Bank</label>
-                    <input disabled={paymentDisabled} value={billDetail.paymentBank} id="Payment Bank" type="text" className={`${classes['text-input']} ${!(isValidate || paymentDisabled || billDetail.paymentId) ? classes['invalid-input'] : undefined}`} onChange={(e) => dispatch({ type: 'paymentBank', paymentBank: e.target.value })}></input>
+                    <input disabled={paymentDisabled} value={billDetail.paymentId} id="Payment Id" type="text" className={`${classes['text-input']} ${!(isValidate || paymentDisabled || billDetail.paymentId !== "") ? classes['invalid-input'] : undefined}`} onChange={(e) => dispatch({ type: 'paymentId', paymentId: e.target.value })}></input>
                 </div>
             </div>
             {
                 (!isValidate || serverError) ? (
                     <div className={classes['validate-wrapper']}>
-                        <p className={classes.invalid}>{serverError ? 'Unknown Error Ocuured' : 'Fill the requird fields'}</p>
+                        <p className={classes.invalid}>{serverError ? 'Unknown Error Ocuured' : 'Fill the required fields'}</p>
                     </div>
                 ) : undefined
             }

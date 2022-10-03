@@ -55,7 +55,7 @@ const LoginBox = (props) => {
                     </div>
                     {invalidPassword ? <p className={classes['invalid-text']}>Password is required</p> : undefined}
                 </div>
-                {invalidCredential ? <p className={classes['invalid-credential']}>Username or password was invalid</p> : undefined}
+                {invalidCredential ? <p className={classes['invalid-credential']}>Username or password were invalid</p> : undefined}
                 <button className={classes['login-btn']} onClick={loginClick}>Login</button>
             </div>
         </div>
