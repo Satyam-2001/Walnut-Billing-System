@@ -1,11 +1,11 @@
 import axios from 'axios'
 import React, { useState, useContext } from 'react'
-import AddBill from './AddBill/AddBill'
+import AddBill from './AddBill'
 import classes from './BillingScreen.module.css'
 import DynamicDropwdownInput from '../Utils/Dynamic Dropdown Input/DynamicDropwdownInput'
 import BillTable from './BillTable'
 import LoginContext from '../../context/login-context'
-import EditBill from './EditBill/EditBill'
+import EditBill from './EditBill'
 
 const BillingScreen = (props) => {
 

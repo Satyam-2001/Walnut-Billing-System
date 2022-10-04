@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import BillInput from '../BillInput/BillInput'
+import BillInput from './BillInput/BillInput';
 import axios from 'axios'
-import LoginContext from '../../../context/login-context'
+import LoginContext from '../../context/login-context'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

@@ -11,6 +11,7 @@ const DynamicDropwdownInput = (props) => {
     const [buttonName, setButtonName] = useState('Select Patient')
     const [data, setData] = useState(null)
     const [timer, setTimer] = useState(setTimeout(() => { }, 1))
+    const [selected, setSelected] = useState(0)
     const logout = useContext(LoginContext)
     const inputRef = useRef()
     const dropdownRef = useRef()
@@ -23,7 +24,7 @@ const DynamicDropwdownInput = (props) => {
             return;
         }
         setTimer(setTimeout(() => {
-            props.getMatchingData(name).then(res => setOptions(res)).catch(e => {
+            props.getMatchingData(name).then(res => {setSelected(0); setOptions(res);}).catch(e => {
                 if (e.response.status === 401) {
                     logout()
                 }
@@ -51,8 +52,27 @@ const DynamicDropwdownInput = (props) => {
     }
 
     const keyDownHandler = (e) => {
-        if (e.key === 'Enter' && !selectButtonDisabled) {
-            fetchBillData()
+        if (e.key === "ArrowDown") {
+            e.preventDefault()
+            setSelected(prop => {
+                if (prop + 1 >= options.length) return prop;
+                return prop + 1;
+            })
+        }
+        else if (e.key === "ArrowUp") {
+            e.preventDefault()
+            setSelected(prop => {
+                if (prop - 1 < 0) return prop;
+                return prop - 1;
+            })
+        }
+        if (e.key === 'Enter' && options.length) {
+            setName(options[selected][props.attr])
+            setOptions([])
+            setSelected(0)
+            setSelectButtonDisabled(true)
+            setButtonName('Change Patient')
+            props.fetchBillData(options[selected])
         }
     }
 
@@ -63,9 +83,9 @@ const DynamicDropwdownInput = (props) => {
                 {
                     options.length > 0 ? (
                         <div ref={dropdownRef} className={classes.dropdown}>
-                            {options.map(data => {
+                            {options.map((data, index) => {
                                 return (
-                                    <button key={data.id} className={classes.btn} onClick={() => selectName(data)}>{data[props.attr]}</button>
+                                    <button key={data.id} className={`${classes.btn} ${index === selected ? classes.selected : undefined}`} onClick={() => selectName(data)}>{data[props.attr]}</button>
                                 )
                             })}
                         </div>

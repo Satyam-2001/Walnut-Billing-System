@@ -5,14 +5,15 @@ import LoginContext from '../../../context/login-context'
 import SelectInput from '../../Utils/SelectInput/SelectInput'
 
 const Input = (props) => {
-    
+
     return (
         <input
             value={props.billDetail[props.name]}
             step={props.step}
             onChange={e => {
-                if(props.type === 'number') e.target.value = Math.abs(e.target.value)
-                if(props.name === 'discount' && +e.target.value > +props.billDetail.per_session_cost) return;                
+                if (props.type === 'number') e.target.value = Math.abs(e.target.value)
+                if (props.name === 'discount' && +e.target.value > +props.billDetail.per_session_cost) return;
+                else if (props.name === 'per_session_cost' && +e.target.value < +props.billDetail.discount) return;
                 props.dispatch({ type: props.name, index: props.index, [props.name]: e.target.value })
             }}
             type={props.type}
@@ -118,13 +119,13 @@ const BillDetailRow = (props) => {
         props.dispatch({ type: 'treatmentId', treatmentId: data, index: props.index })
         setTreatmentData(data)
     }
-    
+
     return (
         <tr>
             <td><SelectInput value={doctorData} getId={data => data.doctor_id} className={!(props.isValidate || doctorData) ? classes['input-invalid'] : undefined} name={'Doctor'} attr={data => data.fullName} disabled={false} data={doctorsArray} callBack={doctorCallBack} /></td>
             <td><SelectInput value={clinicData} className={!(props.isValidate || clinicData) ? classes['input-invalid'] : undefined} name={'Clinic'} attr={data => data.name} disabled={doctorData === null} data={clinicArray} callBack={clinicCallBack} /></td>
             <td><SelectInput value={treatmentData} className={!(props.isValidate || treatmentData) ? classes['input-invalid'] : undefined} name={'Treatment'} attr={data => data.name} disabled={clinicData === null} data={treatmentArray} callBack={treatmentCallBack} /></td>
-            <td><Input className={!(props.isValidate || props.billDetail.no_of_session !== "") ? classes['input-invalid'] : undefined} name='no_of_session' type="number" min={0} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
+            <td><Input className={!(props.isValidate || props.billDetail.no_of_session !== "" && props.billDetail.no_of_session !== "0") ? classes['input-invalid'] : undefined} name='no_of_session' type="number" min={1} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
             <td><Input className={!(props.isValidate || props.billDetail.per_session_cost !== "") ? classes['input-invalid'] : undefined} name='per_session_cost' step={100} type="number" min={0} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
             <td><Input name='discount' type="number" min={0} disabled={props.billDetail.per_session_cost === "" || props.billDetail.per_session_cost === "0"} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
             <td><Input className={!(props.isValidate || props.billDetail.discount === '0' || props.billDetail.discount === '' || props.billDetail.discount_reason !== "") ? classes['input-invalid'] : undefined} name='discount_reason' type="text" billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>

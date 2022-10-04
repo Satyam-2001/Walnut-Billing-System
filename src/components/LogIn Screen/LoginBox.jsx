@@ -37,6 +37,12 @@ const LoginBox = (props) => {
         setShowPasword(prop => !prop)
     }
 
+    const keyDownHandler = (e) => {
+        if(e.key === 'Enter') {
+            loginClick()
+        }
+    }
+
     return (
         <div className={classes['login-box']} >
             <span className={classes.title}>Login</span>
@@ -49,7 +55,7 @@ const LoginBox = (props) => {
                 <div className={classes['login-credential']}>
                     <p className={classes.name}>Password</p>
                     <div className={classes['password-wrapper']}>
-                        <input name='password' type={showPassword ? 'text' : 'password'} autoComplete={"off"} required={true} className={`${classes['login-input']} ${invalidPassword ? classes.invalid : undefined}`} onChange={e => setPassword(e.target.value)} onFocus={fieldOnFocus} value={password}>
+                        <input name='password' type={showPassword ? 'text' : 'password'} autoComplete={"off"} required={true} className={`${classes['login-input']} ${invalidPassword ? classes.invalid : undefined}`} onChange={e => setPassword(e.target.value)} onKeyDown={keyDownHandler} onFocus={fieldOnFocus} value={password}>
                         </input>
                         <button className={classes['visibility-icon']} onClick={changePasswordVisibility}><ion-icon name={showPassword ? 'eye-off-outline' : 'eye-outline'}></ion-icon></button>
                     </div>

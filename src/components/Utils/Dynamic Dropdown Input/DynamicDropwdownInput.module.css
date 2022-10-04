@@ -75,3 +75,7 @@
     background-color: var(--dark-color);
     cursor: no-drop;
 }
+
+.selected {
+    background-color: var(--light-color);
+}

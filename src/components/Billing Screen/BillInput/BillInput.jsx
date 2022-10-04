@@ -70,10 +70,14 @@ const BillInput = (props) => {
 
     const validateData = () => {
         if (billDetail.paymentMode === "" || billDetail.paymentDate === "") return false;
-        if (billDetail.paymentMode !== "Cash" && billDetail.patientId === "") return false;
-        if (billDetailRow.find(row => { return (row.billDetailData.treatmentId === "" || row.billDetailData.no_of_session === "" || row.billDetailData.per_session_cost === "" || ((row.billDetailData.discount === "" || row.billDetailData.discount === '0')  && !(row.billDetailData.discount_reason === ""))) })) return false;
+        if (billDetail.paymentMode !== "Cash" && billDetail.paymentId === "") return false;
+        if (billDetailRow.find(row => { return (row.billDetailData.treatmentId === "" || row.billDetailData.no_of_session === "" || row.billDetailData.no_of_session === "0" || row.billDetailData.per_session_cost === "" || ((row.billDetailData.discount !== "" && row.billDetailData.discount !== '0') && (row.billDetailData.discount_reason === ""))) })) return false;
         return true;
     }
+
+    useEffect(() => {
+        setValidate(prop => prop || validateData())
+    }, [billDetail, billDetailRow])
 
     const setPaymentMode = paymentMode => {
         if (paymentMode === 'Cash') {
@@ -126,7 +130,7 @@ const BillInput = (props) => {
                 </div>
                 <div className={classes.cell}>
                     <label className={classes.label} htmlFor="Payment Id">Payment Id</label>
-                    <input disabled={paymentDisabled} value={billDetail.paymentId} id="Payment Id" type="text" className={`${classes['text-input']} ${!(isValidate || paymentDisabled || billDetail.paymentId !== "") ? classes['invalid-input'] : undefined}`} onChange={(e) => dispatch({ type: 'paymentId', paymentId: e.target.value })}></input>
+                    <input autoComplete='off' disabled={paymentDisabled} value={billDetail.paymentId} id="Payment Id" type="text" className={`${classes['text-input']} ${!(isValidate || paymentDisabled || billDetail.paymentId !== "") ? classes['invalid-input'] : undefined}`} onChange={(e) => dispatch({ type: 'paymentId', paymentId: e.target.value })}></input>
                 </div>
             </div>
             {
