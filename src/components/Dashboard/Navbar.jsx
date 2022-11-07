@@ -3,7 +3,8 @@ import classes from './Navbar.module.css'
 
 const Navbar = (props) => {
 
-    const optionList = ['Billing Screen']
+    const optionList = ['Billing Screen', 'Clinic', 'Doctor', 'Treatment']
+    // 'Add Patient',
 
     return (
         <Fragment>

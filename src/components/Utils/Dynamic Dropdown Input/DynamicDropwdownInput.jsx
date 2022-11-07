@@ -1,14 +1,15 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import classes from './DynamicDropwdownInput.module.css'
 import LoginContext from '../../../context/login-context'
 import useOutsideAlerter from '../../../hooks/useOutsideAlerter'
+import StyledButton from '../StyledButton/StyledButton'
 
 const DynamicDropwdownInput = (props) => {
 
     const [name, setName] = useState('')
     const [options, setOptions] = useState([])
     const [selectButtonDisabled, setSelectButtonDisabled] = useState(true)
-    const [buttonName, setButtonName] = useState('Select Patient')
+    const [buttonName, setButtonName] = useState('Select')
     const [data, setData] = useState(null)
     const [timer, setTimer] = useState(setTimeout(() => { }, 1))
     const [selected, setSelected] = useState(0)
@@ -17,6 +18,21 @@ const DynamicDropwdownInput = (props) => {
     const dropdownRef = useRef()
     useOutsideAlerter([inputRef, dropdownRef], () => setOptions([]))
 
+    useEffect(() => {
+        if(props.emptyField) {
+            setName('')
+        }
+    }, [])
+
+    useEffect(() => {
+        setName('')
+        setButtonName('Select')
+        setSelectButtonDisabled(true)
+        setData(null)
+        setSelected(0)
+        setOptions([])
+    }, [props.buttonName])
+
     const callMethod = (name) => {
         clearTimeout(timer);
         if (name.length <= 2) {
@@ -24,7 +40,7 @@ const DynamicDropwdownInput = (props) => {
             return;
         }
         setTimer(setTimeout(() => {
-            props.getMatchingData(name).then(res => {setSelected(0); setOptions(res);}).catch(e => {
+            props.getMatchingData(name).then(res => {setSelected(0); setOptions(res || []);}).catch(e => {
                 if (e.response.status === 401) {
                     logout()
                 }
@@ -40,13 +56,13 @@ const DynamicDropwdownInput = (props) => {
 
     const fetchBillData = () => {
         setSelectButtonDisabled(true)
-        setButtonName('Change Patient')
+        setButtonName('Change')
         props.fetchBillData(data)
     }
 
     const selectName = (data) => {
         setSelectButtonDisabled(false)
-        setName(data.fullName)
+        setName(data[props.attr])
         setOptions([])
         setData(data)
     }
@@ -71,7 +87,7 @@ const DynamicDropwdownInput = (props) => {
             setOptions([])
             setSelected(0)
             setSelectButtonDisabled(true)
-            setButtonName('Change Patient')
+            setButtonName('Change ')
             props.fetchBillData(options[selected])
         }
     }
@@ -79,20 +95,20 @@ const DynamicDropwdownInput = (props) => {
     return (
         <div className={classes['patient-input-wrapper']}>
             <div className={classes.wrapper}>
-                <input ref={inputRef} className={classes['text-input']} type='text' onChange={changeInputValue} onKeyDown={keyDownHandler} value={name} onClick={() => callMethod(name)} />
+                <input id={`${props.buttonName} input`} ref={inputRef} className={classes['text-input']} type='text' onChange={changeInputValue} onKeyDown={keyDownHandler} value={name} onClick={() => callMethod(name)} />
                 {
                     options.length > 0 ? (
                         <div ref={dropdownRef} className={classes.dropdown}>
                             {options.map((data, index) => {
                                 return (
-                                    <button key={data.id} className={`${classes.btn} ${index === selected ? classes.selected : undefined}`} onClick={() => selectName(data)}>{data[props.attr]}</button>
+                                    <button key={data.id | data[props.attr]} className={`${classes.btn} ${index === selected ? classes.selected : undefined}`} onClick={() => selectName(data)}>{data[props.attr]}</button>
                                 )
                             })}
                         </div>
                     ) : undefined
                 }
             </div>
-            <button disabled={selectButtonDisabled} className={`${classes['submit-btn']} ${selectButtonDisabled ? classes['btn-disabled'] : undefined}`} onClick={fetchBillData}><p>{buttonName}</p></button>
+            <StyledButton disabled={selectButtonDisabled} onClick={fetchBillData}>{`${buttonName} ${props.buttonName}`}</StyledButton>
         </div>
     )
 }

@@ -1,0 +1,61 @@
+.box {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.label {
+    display: inline-block;
+    font-family: BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-weight: 500;
+    width: calc(40% - 0.5rem);
+}
+
+.cell {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.2rem 2rem;
+}
+
+.text-input {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 70%;
+    padding: 0.1rem;
+    outline: none;
+}
+
+.text-input:active,
+.text-input:focus {
+    border-color: var(--light-color);
+    border-style: solid;
+    border-width: 2px;
+    background-color: transparent;
+}
+
+.name {
+    margin: 0.5rem 0rem 2rem 2rem;
+    font-size: 1.5rem;
+}
+
+.button-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 2rem;
+}
+
+@media (max-width: 1000px) {
+    .box {
+        grid-template-columns: 100%;
+    }
+
+    .label {
+        width: calc(50% - 0.5rem);
+    }
+
+    .cell {
+        justify-content: space-between;
+    }
+}

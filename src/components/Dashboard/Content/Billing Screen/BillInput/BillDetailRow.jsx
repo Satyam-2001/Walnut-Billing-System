@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react'
 import classes from './BillDetailRow.module.css'
 import axios from 'axios'
-import LoginContext from '../../../context/login-context'
-import SelectInput from '../../Utils/SelectInput/SelectInput'
+import LoginContext from '../../../../../context/login-context'
+import SelectInput from '../../../../Utils/SelectInput/SelectInput'
 
 const Input = (props) => {
 
@@ -19,6 +19,7 @@ const Input = (props) => {
             type={props.type}
             min={props.min}
             max={props.max}
+            readOnly={props.readOnly}
             disabled={props.disabled}
             className={`${classes['text-input']} ${props.className}`}
         />
@@ -122,16 +123,16 @@ const BillDetailRow = (props) => {
 
     return (
         <tr>
-            <td><SelectInput value={doctorData} getId={data => data.doctor_id} className={!(props.isValidate || doctorData) ? classes['input-invalid'] : undefined} name={'Doctor'} attr={data => data.fullName} disabled={false} data={doctorsArray} callBack={doctorCallBack} /></td>
-            <td><SelectInput value={clinicData} className={!(props.isValidate || clinicData) ? classes['input-invalid'] : undefined} name={'Clinic'} attr={data => data.name} disabled={doctorData === null} data={clinicArray} callBack={clinicCallBack} /></td>
-            <td><SelectInput value={treatmentData} className={!(props.isValidate || treatmentData) ? classes['input-invalid'] : undefined} name={'Treatment'} attr={data => data.name} disabled={clinicData === null} data={treatmentArray} callBack={treatmentCallBack} /></td>
-            <td><Input className={!(props.isValidate || props.billDetail.no_of_session !== "" && props.billDetail.no_of_session !== "0") ? classes['input-invalid'] : undefined} name='no_of_session' type="number" min={1} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
-            <td><Input className={!(props.isValidate || props.billDetail.per_session_cost !== "") ? classes['input-invalid'] : undefined} name='per_session_cost' step={100} type="number" min={0} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
-            <td><Input name='discount' type="number" min={0} disabled={props.billDetail.per_session_cost === "" || props.billDetail.per_session_cost === "0"} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
-            <td><Input className={!(props.isValidate || props.billDetail.discount === '0' || props.billDetail.discount === '' || props.billDetail.discount_reason !== "") ? classes['input-invalid'] : undefined} name='discount_reason' type="text" billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
-            <td><Input name='session_start_Date' type="date" max={props.billDetail.session_end_Date} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
-            <td><Input name='session_end_Date' type="date" min={props.billDetail.session_start_Date} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
-            <td><button type='button' onClick={() => props.removeRow(props.id)} className='icon-btn'><ion-icon name="trash"></ion-icon></button></td>
+            <td><SelectInput readOnly={props.readOnly} value={doctorData} getId={data => data.doctor_id} className={!(props.isValidate || doctorData) ? classes['input-invalid'] : undefined} name={'Doctor'} attr={data => data.fullName} disabled={false} data={doctorsArray} callBack={doctorCallBack} /></td>
+            <td><SelectInput readOnly={props.readOnly} value={clinicData} className={!(props.isValidate || clinicData) ? classes['input-invalid'] : undefined} name={'Clinic'} attr={data => data.name} disabled={doctorData === null} data={clinicArray} callBack={clinicCallBack} /></td>
+            <td><SelectInput readOnly={props.readOnly} value={treatmentData} className={!(props.isValidate || treatmentData) ? classes['input-invalid'] : undefined} name={'Treatment'} attr={data => data.name} disabled={clinicData === null} data={treatmentArray} callBack={treatmentCallBack} /></td>
+            <td><Input readOnly={props.readOnly} className={!(props.isValidate || props.billDetail.no_of_session !== "" && props.billDetail.no_of_session !== "0") ? classes['input-invalid'] : undefined} name='no_of_session' type="number" min={1} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
+            <td><Input readOnly={props.readOnly} className={!(props.isValidate || props.billDetail.per_session_cost !== "") ? classes['input-invalid'] : undefined} name='per_session_cost' step={100} type="number" min={0} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
+            <td><Input readOnly={props.readOnly} name='discount' type="number" min={0} disabled={props.billDetail.per_session_cost === "" || props.billDetail.per_session_cost === "0"} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
+            <td><Input readOnly={props.readOnly} className={!(props.isValidate || props.billDetail.discount === '0' || props.billDetail.discount === '' || props.billDetail.discount_reason !== "") ? classes['input-invalid'] : undefined} name='discount_reason' type="text" billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
+            <td><Input readOnly={props.readOnly} name='session_start_Date' type="date" max={props.billDetail.session_end_Date} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
+            <td><Input readOnly={props.readOnly} name='session_end_Date' type="date" min={props.billDetail.session_start_Date} billDetail={props.billDetail} dispatch={props.dispatch} index={props.index} /></td>
+            {!props.readOnly ? <td><button type='button' onClick={() => props.removeRow(props.id)} className='icon-btn'><ion-icon name="trash"></ion-icon></button></td> : undefined }
         </tr>
     )
 }

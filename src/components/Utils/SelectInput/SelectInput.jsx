@@ -21,7 +21,7 @@ const SelectInput = (props) => {
     }
 
     return (
-        <select onChange={selectionHandler} disabled={props.disabled} className={props.className} defaultValue={0} value={value}>
+        <select onChange={selectionHandler} disabled={props.disabled || props.readOnly} className={props.className} defaultValue={0} value={value}>
             {isChoosed ? undefined : <option value={0}>Select {props.name}</option>}
             {props.data.map((obj, index) => {
                 const id = props.getId?.(obj) || obj.id || index

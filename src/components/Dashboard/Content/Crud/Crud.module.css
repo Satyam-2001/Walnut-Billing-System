@@ -1,0 +1,10 @@
+.header {
+    /* display: flex;
+    flex-direction: column; */
+    justify-content: space-between;
+}
+
+.input-name {
+    display: flex;
+    flex-direction: row;
+}

@@ -1,11 +1,13 @@
 import axios from 'axios'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, Fragment } from 'react'
 import AddBill from './AddBill'
 import classes from './BillingScreen.module.css'
-import DynamicDropwdownInput from '../Utils/Dynamic Dropdown Input/DynamicDropwdownInput'
+import DynamicDropwdownInput from '../../../Utils/Dynamic Dropdown Input/DynamicDropwdownInput'
 import BillTable from './BillTable'
-import LoginContext from '../../context/login-context'
+import LoginContext from '../../../../context/login-context'
 import EditBill from './EditBill'
+import Heading from '../Utils/Heading'
+import StyledButton from '../../../Utils/StyledButton/StyledButton'
 
 const BillingScreen = (props) => {
 
@@ -15,7 +17,7 @@ const BillingScreen = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [patientData, setPatient] = useState(null)
     const logout = useContext(LoginContext)
-    
+
 
     const getMatchingPatient = async (name) => {
         try {
@@ -72,21 +74,20 @@ const BillingScreen = (props) => {
 
 
     return (
-        <div className={props.className}>
-            <div className={classes.header}>
-                <h2 className={classes.title}>Billing Screen</h2>
+        <Fragment>
+            <Heading name='Billing Screen'>
                 <div className={classes['patient-input']}>
                     <div className={classes['patient-box']}>
                         <p className={classes.label}>Patient Name</p>
-                        <DynamicDropwdownInput attr={'fullName'} getMatchingData={getMatchingPatient} fetchBillData={fetchBillData} />
+                        <DynamicDropwdownInput buttonName='Patient' attr={'fullName'} getMatchingData={getMatchingPatient} fetchBillData={fetchBillData} />
                     </div>
                 </div>
-            </div>
+            </Heading>
             {typeof billData === 'object' ? (
                 <div className={classes['receipt-box']}>
                     <div className={classes['receipt-title']}>
                         <h3>RECEIPT : {patientData.fullName}</h3>
-                        <button onClick={addBill} className={classes['add-bill-btn']}><ion-icon name={isAddBillOpen ? "close-outline" : "add-outline"} className={classes.plus}></ion-icon><p>  Add Bill</p></button>
+                        <StyledButton onClick={addBill} className={classes['add-bill-btn']}><ion-icon name={isAddBillOpen ? "close-outline" : "add-outline"} className={classes.plus}></ion-icon><p>  Add Bill</p></StyledButton>
                     </div>
                     <hr />
                 </div>
@@ -96,7 +97,7 @@ const BillingScreen = (props) => {
             {isEditBillOpen ? <EditBill patientData={patientData} closeBill={() => setIsEditBillOpen(undefined)} billInfo={isEditBillOpen} fetchBillData={fetchBillData} /> : undefined}
             {!isAddBillOpen && !isEditBillOpen && !isLoading && typeof billData === 'object' && billData.length > 0 ? <BillTable billData={billData} editBill={editBill} patientData={patientData} fetchBillData={fetchBillData} /> : undefined}
             {!isAddBillOpen && !isLoading && typeof billData === 'object' && billData.length === 0 ? <p className={classes.text}>No Bill Available</p> : undefined}
-        </div>
+        </Fragment>
     )
 }
 
