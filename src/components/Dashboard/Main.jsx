@@ -34,6 +34,89 @@ const initialTreatmentData = {
     "status": true
 }
 
+const initialPatientData =
+{
+    "id": 0,
+    "firstName": "",
+    "middleName": "",
+    "lastName": "",
+    "fathersNumber": "",
+    "motherNumber": "",
+    "whatsappNumber": "",
+    "address": "",
+    "state": "",
+    "city": "",
+    "pincode": "",
+    "dateOfBirth": "",
+    "country": "",
+    "gender": "",
+    "email": ""
+}
+
+const doctor_api_info = {
+    name: 'Doctor',
+    url: {
+        fetchBill: 'doctors?doctorId=',
+        getMatching: 'doctors/getMatchingDoctor?doctorName=',
+        save: 'doctors/save',
+        update: 'doctors/update',
+        delete: 'doctors/delete?doctorId='
+    },
+    id:  {
+        get: 'doctor_id',
+        data: 'docotrId'
+    },
+    getName: 'fullName'
+}
+
+const clinic_api_info = {
+    name: 'Clinic',
+    url: {
+        fetchBill: 'clinic?clinicId=',
+        getMatching: 'clinic/getMatchingClinic?clinicName=',
+        save: 'clinic/save',
+        update: 'clinic/update',
+        delete: 'clinic/delete?clinicId='
+    },
+    id:  {
+        get: 'id',
+        data: 'clinicId'
+    },
+    getName: 'name'
+}
+
+const treatment_api_info = {
+    name: 'Treatment',
+    url: {
+        fetchBill: 'treatment?treatmentId=',
+        getMatching: 'treatment/getMatchingTreatment?treatmentName=',
+        save: 'treatment/save',
+        update: 'treatment/update',
+        delete: 'treatment/delete?treatmentId='
+    },
+    id:  {
+        get: 'id',
+        data: 'treatmentId'
+    },
+    getName: 'name'
+}
+
+const patient_api_info = {
+    name: 'Patient',
+    url: {
+        fetchBill: 'patient/getDetailsById?id=',
+        getMatching: 'patient/matchingPatient?name=',
+        save: 'patient/save',
+        update: 'patient/edit',
+        delete: 'patient/delete?id='
+    },
+    id:  {
+        get: 'id',
+        data: 'id'
+    },
+    getName: 'fullName'
+}
+
 const Main = (props) => {
 
     const [selected, setSelected] = useState('Billing Screen')
@@ -45,9 +128,10 @@ const Main = (props) => {
     const NavbarItems = {
         'Billing Screen': () => <BillingScreen username={props.username} />,
         'Add Patient': () => <AddPatient />,
-        'Clinic': () => <Crud api_credential={{ name: 'Clinic', api_name: 'Clinic', attr: 'id', getId: 'id', getName: 'name' }} initialData={initialClinicData} showName={data => data.name} />,
-        'Doctor': () => <Crud api_credential={{ name: 'Doctors', api_name: 'Doctor', attr: 'doctorId', getId: 'doctor_id', getName: 'fullName' }} initialData={initialDoctorData} showName={data => `${data.firstName} ${data.middleName} ${data.lastName}`} />,
-        'Treatment': () => <Crud api_credential={{ name: 'Treatment', api_name: 'Treatment', attr: 'treatmentId', getId: 'id', getName: 'name' }} initialData={initialTreatmentData} showName={data => data.name} />
+        'Clinic': () => <Crud api_info={clinic_api_info} initialData={initialClinicData} showName={data => data.name} />,
+        'Doctor': () => <Crud api_info={doctor_api_info} initialData={initialDoctorData} showName={data => `${data.firstName} ${data.middleName} ${data.lastName}`} />,
+        'Treatment': () => <Crud api_info={treatment_api_info} initialData={initialTreatmentData} showName={data => data.name} />,
+        'Patient': () => <Crud api_info={patient_api_info} initialData={initialPatientData} showName={data => `${data.firstName} ${data.middleName} ${data.lastName}`} />
     }
 
     return (

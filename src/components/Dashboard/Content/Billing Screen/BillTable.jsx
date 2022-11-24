@@ -12,7 +12,7 @@ const BillTable = (props) => {
         <Fragment>
             <Table header={tableHeader} className={classes.table}>
                 {props.billData.map(billInfo => {
-                    return <BillRow editBill={props.editBill} key={billInfo.billId} billInfo={billInfo} patientData={props.patientData} />
+                    return <BillRow fetchBillData={props.fetchBillData} editBill={props.editBill} key={billInfo.billId} billInfo={billInfo} patientData={props.patientData} />
                 })}
             </Table>
         </Fragment>

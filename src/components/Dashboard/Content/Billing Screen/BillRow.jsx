@@ -9,7 +9,6 @@ import BillInput from './BillInput/BillInput'
 
 const BillRow = (props) => {
 
-    const [isViewOpen, setViewOpen] = useState(false)
     const [isLoadingDownload, setIsLoadingDownload] = useState(false)
     const [isLoadingMail, setIsLoadingMail] = useState(false)
     const [isModalOpen, setModalOpen] = useState(false)

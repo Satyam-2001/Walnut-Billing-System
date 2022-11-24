@@ -3,11 +3,9 @@ import axios from 'axios'
 import LoginContext from '../../../../context/login-context'
 import CrudHeader from './CrudHeader'
 import CrudData from './CrudData'
-// import CrudEdit from './CrudEdit'
 
 const Crud = (props) => {
 
-    const {name, attr, api_name, getName, getId} = props.api_credential
     const [isEdit, setIsEdit] = useState(false)
     const [isAdd, setIsAdd] = useState(false)
     const [crudData, setCrudData] = useState(null)
@@ -21,7 +19,7 @@ const Crud = (props) => {
 
     const fetchBillData = async (data) => {
         try {
-            const res = await axios.get(`/api/v1/${name.toLowerCase()}?${api_name.toLowerCase()}Id=${data[getId]}`, {
+            const res = await axios.get(`/api/v1/${props.api_info.url.fetchBill}${data[props.api_info.id.get]}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('auth_token')}`
                 }
@@ -29,8 +27,6 @@ const Crud = (props) => {
             setIsEdit(true)
             setIsAdd(false)
             setCrudData(res.data)
-            console.log(res.data);
-            
         }
         catch (error) {
             if (error.response.status === 401) {
@@ -53,9 +49,9 @@ const Crud = (props) => {
 
     return (
         <Fragment>
-            <CrudHeader emptyField={isAdd} getName={getName} name={name} api_name={api_name} fetchBillData={fetchBillData} addCrud={addCrud} />
-            {isEdit ? <CrudData showName={props.showName} type='edit' name={name} api_name={api_name} cancel={cancel} setCrudData={setCrudData} crudData={crudData} /> : undefined}
-            {isAdd ? <CrudData showName={props.showName} type='add' name={name} api_name={api_name} cancel={cancel} setCrudData={(data) => {setIsEdit(false); setIsAdd(true); setCrudData(data);}} crudData={crudData} /> : undefined}
+            <CrudHeader emptyField={isAdd} api_info={props.api_info} fetchBillData={fetchBillData} addCrud={addCrud} />
+            {isEdit ? <CrudData showName={props.showName} type='edit' api_info={props.api_info} cancel={cancel} setCrudData={setCrudData} crudData={crudData} /> : undefined}
+            {isAdd ? <CrudData showName={props.showName} type='add' api_info={props.api_info} cancel={cancel} setCrudData={(data) => {setIsEdit(false); setIsAdd(true); setCrudData(data);}} crudData={crudData} /> : undefined}
         </Fragment>
     )
 }
